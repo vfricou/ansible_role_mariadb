@@ -17,7 +17,6 @@ debian:
     - mariadb-client
     - mariadb-server
     - python3-mysqldb
-    - python-pymysql
     - mysqltuner
     - cron
   path: "/etc/mysql/mariadb.conf.d"

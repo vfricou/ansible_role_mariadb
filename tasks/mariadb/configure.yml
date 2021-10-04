@@ -2,8 +2,7 @@
 - name: "import RHEL tasks"
   ansible.builtin.import_tasks: rhel/main.yml
   when: ansible_distribution == 'Rocky' or
-        ansible_distribution == 'RedHat' or
-        ansible_distribution == 'CentOS'
+        ansible_distribution == 'RedHat'
 
 - name: "import Debian tasks"
   ansible.builtin.import_tasks: debian/main.yml

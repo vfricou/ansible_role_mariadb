@@ -5,8 +5,7 @@
   vars:
     socket_path: "{{ rhel['mariadb']['socket'] }}"
   when: ansible_distribution == 'Rocky' or
-        ansible_distribution == 'RedHat' or
-        ansible_distribution == 'CentOS'
+        ansible_distribution == 'RedHat'
 
 - name: "INCLUDE => DEBIAN mariadb | postconfigure | backup tasks"
   ansible.builtin.include_tasks: postconfigure/backup.yml
