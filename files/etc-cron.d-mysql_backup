@@ -1,0 +1,6 @@
+###########################################
+#           MariaDB Backup task           #
+#           Provided by Ansible           #
+###########################################
+
+0 20 * * * root /srv/exploit/backup/scripts/mysql_backup.sh
