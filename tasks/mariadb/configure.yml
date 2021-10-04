@@ -1,3 +1,4 @@
+---
 - name: "import RHEL tasks"
   ansible.builtin.import_tasks: rhel/main.yml
   when: ansible_distribution == 'Rocky' or

@@ -1,3 +1,4 @@
+---
 - name: "mariadb | postconfigure | systemd | update systemd unit with override"
   ansible.builtin.template:
     src: systemd/mariadb_override.j2
