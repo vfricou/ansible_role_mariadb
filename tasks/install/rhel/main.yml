@@ -1,0 +1,6 @@
+---
+- name: "install | rhel | install mariadb collection"
+  ansible.builtin.yum:
+    name: "{{ rhel['packages'] }}"
+    state: present
+  notify: restart mariadb

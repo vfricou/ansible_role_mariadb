@@ -1,0 +1,100 @@
+---
+# @var mariadb_conf_logrotate_retention: '30' # Define logs retentions in days
+mariadb_conf_logrotate_retention: '30'
+# @var mariadb_conf_network_bind: '127.0.0.1' # Define mysql daemon bind address
+mariadb_conf_network_bind: '127.0.0.1'
+
+# @var mariadb_conf_mysqld_gen_max_allowed_packets: '16M' # Define max network packet size
+mariadb_conf_mysqld_gen_max_allowed_packets: '16M'
+# @var mariadb_conf_mysqld_gen_max_connections: '200' # Define max simultaneous connections
+mariadb_conf_mysqld_gen_max_connections: '200'
+# @var mariadb_conf_mysqld_gen_skip_name_resolve: '1' # Define if mariadb resolve name to apply grants at connection
+mariadb_conf_mysqld_gen_skip_name_resolve: '1'
+# @var mariadb_conf_mysqld_gen_max_connect_errors: '20' # Define max login error before lock remote host
+mariadb_conf_mysqld_gen_max_connect_errors: '20'
+# @var mariadb_conf_mysqld_gen_max_user_connections: '200' # Define max simultaneous connections for same user
+mariadb_conf_mysqld_gen_max_user_connections: '200'
+# @var mariadb_conf_mysqld_gen_max_heap_table_size: '16M' # Define max in memory table size
+mariadb_conf_mysqld_gen_max_heap_table_size: '16M'
+# @var mariadb_conf_mysqld_gen_timeout: '60' # Define connection timeout
+mariadb_conf_mysqld_gen_timeout: '60'
+# @var mariadb_conf_mysqld_gen_tmp_table_size: '16M' # Define max temp table size
+mariadb_conf_mysqld_gen_tmp_table_size: '16M'
+# @var mariadb_conf_mysqld_gen_open_files_limit: '65535' # Define open files limit
+mariadb_conf_mysqld_gen_open_files_limit: '65535'
+# @var mariadb_conf_mysqld_default_timezone: 'Europe/Paris' # Define mariadb default timezone
+mariadb_conf_mysqld_default_timezone: 'Europe/Paris'
+# @var mariadb_conf_mysqld_buf_key_buffer_size: '16M' # Define buffer size for index block
+mariadb_conf_mysqld_buf_key_buffer_size: '16M'
+# @var mariadb_conf_mysqld_buf_sort_buffer_size: '2M' # Define per session sort buffer size
+mariadb_conf_mysqld_buf_sort_buffer_size: '2M'
+# @var mariadb_conf_mysqld_buf_read_buffer_size: '128k' # Define read buffer size allocated to sequential scan
+mariadb_conf_mysqld_buf_read_buffer_size: '128k'
+# @var mariadb_conf_mysqld_buf_read_rnd_buffer_size: '256k' # Define read buffer size for reading rows
+mariadb_conf_mysqld_buf_read_rnd_buffer_size: '256k'
+# @var mariadb_conf_mysqld_buf_join_buffer_size: '128k' # Define join buffer size to perform join operations
+mariadb_conf_mysqld_buf_join_buffer_size: '128k'
+# @var mariadb_conf_mysqld_cache_query_cache_limit: '16M' # Define engine query cache size limit for larger query
+mariadb_conf_mysqld_cache_query_cache_limit: '16M'
+# @var mariadb_conf_mysqld_cache_query_cache_size: '0M' # Define engine query cache size
+mariadb_conf_mysqld_cache_query_cache_size: '0M'
+# @var mariadb_conf_mysqld_cache_query_cache_type: '0' # Define state of query cache
+mariadb_conf_mysqld_cache_query_cache_type: '0'
+# @var mariadb_conf_mysqld_cache_table_cache: '64' # Define amount of tables allowed to be cached
+mariadb_conf_mysqld_cache_table_cache: '64'
+# @var mariadb_conf_mysqld_cache_table_definition_cache: '1400' # Define amount of table definition to be cached
+mariadb_conf_mysqld_cache_table_definition_cache: '1400'
+# @var mariadb_conf_mysqld_cache_table_open_cache: '2000' # Define how many tables could be cached
+mariadb_conf_mysqld_cache_table_open_cache: '2000'
+# @var mariadb_conf_mysqld_cache_table_open_cache_instances: '8'
+mariadb_conf_mysqld_cache_table_open_cache_instances: '8'
+# @var mariadb_conf_mysqld_cache_thread_cache_size: '8'
+mariadb_conf_mysqld_cache_thread_cache_size: '8'
+# @var mariadb_conf_mysqld_charset_charset_set_server: 'utf8mb4' # Define global server charset
+mariadb_conf_mysqld_charset_charset_set_server: 'utf8mb4'
+# @var mariadb_conf_mysqld_charset_collation_server: 'utf8mb4_general_ci' # Define default database collation
+mariadb_conf_mysqld_charset_collation_server: 'utf8mb4_general_ci'
+# @var mariadb_conf_mysqld_innodb_strict_mode: 'ON' # Define if InnoDB engine use strict mode
+mariadb_conf_mysqld_innodb_strict_mode: 'ON'
+# @var mariadb_conf_mysqld_innodb_buffer_pool_size: '384M' # Define InnoDB buffer pool size
+mariadb_conf_mysqld_innodb_buffer_pool_size: '384M'
+# @var mariadb_conf_mysqld_innodb_buffer_pool_instances: '8' # Define InnoDB buffer pool instances count
+mariadb_conf_mysqld_innodb_buffer_pool_instances: '8'
+# @var mariadb_conf_mysqld_innodb_buffer_pool_load_at_startup: 'ON' # Define in InnoDB engine load pools at startup
+mariadb_conf_mysqld_innodb_buffer_pool_load_at_startup: 'ON'
+# @var mariadb_conf_mysqld_innodb_file_per_table: 'ON' # Define in InnoDB engine create one file by table
+mariadb_conf_mysqld_innodb_file_per_table: 'ON'
+# @var mariadb_conf_mysqld_innodb_flush_method: 'O_DIRECT' # Define InnoDB datafile acces method
+mariadb_conf_mysqld_innodb_flush_method: 'O_DIRECT'
+# @var mariadb_conf_mysqld_innodb_flush_log_at_trx_commit: '1' # Define InnoDB redo log comportment
+mariadb_conf_mysqld_innodb_flush_log_at_trx_commit: '1'
+# @var mariadb_conf_mysqld_innodb_log_buffer_size: '16M' # Define InnoDB engine log buffer
+mariadb_conf_mysqld_innodb_log_buffer_size: '16M'
+# @var mariadb_conf_mysqld_innodb_log_file_size: '48M' # Define InnoDB engine log file size
+mariadb_conf_mysqld_innodb_log_file_size: '48M'
+# @var mariadb_conf_mysqld_innodb_log_files_in_group: '2' # Define InnoDB engine log datafile
+mariadb_conf_mysqld_innodb_log_files_in_group: '2'
+# @var mariadb_conf_mysqld_log_binlog_do_db: 'include_database_name' #
+mariadb_conf_mysqld_log_binlog_do_db: 'include_database_name'
+# @var mariadb_conf_mysqld_log_binlog_ignore_db: 'exclude_database_name' #
+mariadb_conf_mysqld_log_binlog_ignore_db: 'exclude_database_name'
+# @var mariadb_conf_mysqld_log_max_binlog_size: '100M' # Define max binlog file size
+mariadb_conf_mysqld_log_max_binlog_size: '100M'
+# @var mariadb_conf_mysqld_log_sync_binlog: '1' # Define if binlog must be synced to disk
+mariadb_conf_mysqld_log_sync_binlog: '1'
+# @var mariadb_conf_mysqld_log_expire_logs_days: '10' # Define log expirations
+mariadb_conf_mysqld_log_expire_logs_days: '10'
+# @var mariadb_conf_mysqld_log_general_log: '1' # Define un query and connections could be logged
+mariadb_conf_mysqld_log_general_log: '1'
+# @var mariadb_conf_mysqld_log_long_query_time: '10' # Define threshold to log long query
+mariadb_conf_mysqld_log_long_query_time: '10'
+# @var mariadb_conf_mysqld_log_log_slow_rate_limit: '1000' # Define rate limit to log slow query
+mariadb_conf_mysqld_log_log_slow_rate_limit: '1000'
+# @var mariadb_conf_mysqld_log_log_slow_verbosity: 'query_plan' # Define slow log verbosity
+mariadb_conf_mysqld_log_log_slow_verbosity: 'query_plan'
+# @var mariadb_conf_mysqld_log_log_query_not_using_indexes: 'On' # Define if you log query not using indexes
+mariadb_conf_mysqld_log_log_query_not_using_indexes: 'On'
+# @var mariadb_conf_mysqld_threads_stack: '192k' # Define size of thread stack
+mariadb_conf_mysqld_threads_stack: '192k'
+# @var mariadb_conf_mysqld_performance_schema: 'ON' # Activate performance schema (ON/OFF)
+mariadb_conf_mysqld_performance_schema: 'ON'

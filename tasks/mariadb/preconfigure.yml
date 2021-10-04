@@ -1,0 +1,52 @@
+---
+- name: "mariadb | preconfigure | flush handlers"
+  ansible.builtin.meta: flush_handlers
+
+- name: "mariadb | preconfigure | check mariadb timezone existance"
+  community.mysql.mysql_query:
+    login_db: mysql
+    query: SELECT COUNT(1) FROM mysql.time_zone_name
+  register: mariadb_tz_name
+
+- name: "mariadb | preconfigure | perform timezone integration"
+  block:
+    - name: "mariadb | preconfigure | generate timezone sql file"  # noqa no-changed-when
+      ansible.builtin.shell: mysql_tzinfo_to_sql /usr/share/zoneinfo/ > /tmp/zoneinfo.sql
+
+    - name: "mariadb | preconfigure | import zoneinfo into mariadb"
+      community.mysql.mysql_db:
+        name: mysql
+        state: import
+        target: /tmp/zoneinfo.sql
+  when:
+    - mariadb_tz_name['query_result'][0][0]['COUNT(1)']|int == 0
+
+- name: "mariadb | preconfigure | ensure required folder present"
+  ansible.builtin.file:
+    path: '{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    state: directory
+  with_items:
+    - /srv/exploit/backup/scripts
+    - /srv/exploit/backup/mysqldump
+    - /etc/systemd/system/mariadb.service.d
+
+- name: "mariadb | preconfigure | ensure log folder rigths"
+  ansible.builtin.file:
+    path: '{{ item }}'
+    owner: 'mysql'
+    group: 'mysql'
+    mode: '0750'
+    state: directory
+  with_items:
+    - /var/log/mysql
+
+- name: "mariadb | preconfigure | ensure main configuration folder present"
+  ansible.builtin.file:
+    path: '{{ config_folder }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    state: directory

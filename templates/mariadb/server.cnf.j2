@@ -1,0 +1,83 @@
+###########################################
+#         MariaDB Server settings         #
+#           Provided by Ansible           #
+#         Don't modify this file          #
+###########################################
+
+[mysqld]
+# General config
+user                            = mysql
+pid-file                        = {{ pidfile_path }}
+socket                          = {{ socket_path }}
+port                            = 3306
+basedir                         = /usr
+datadir                         = /var/lib/mysql
+tmpdir                          = /tmp
+lc-messages-dir                 = /usr/share/mysql
+max_allowed_packet              = {{ mariadb_conf_mysqld_gen_max_allowed_packets }}
+myisam_recover_options          = BACKUP
+max_connections                 = {{ mariadb_conf_mysqld_gen_max_connections }}
+skip_name_resolve               = {{ mariadb_conf_mysqld_gen_skip_name_resolve }}
+default_storage_engine          = InnoDB
+max_connect_errors              = {{ mariadb_conf_mysqld_gen_max_connect_errors }}
+max_user_connections            = {{ mariadb_conf_mysqld_gen_max_user_connections }}
+max_heap_table_size             = {{ mariadb_conf_mysqld_gen_max_heap_table_size }}
+wait_timeout                    = {{ mariadb_conf_mysqld_gen_timeout }}
+tmp_table_size                  = {{ mariadb_conf_mysqld_gen_tmp_table_size }}
+open_files_limit                = {{ mariadb_conf_mysqld_gen_open_files_limit }}
+default-time-zone               = {{ mariadb_conf_mysqld_default_timezone }}
+
+# Buffers config
+key_buffer_size                 = {{ mariadb_conf_mysqld_buf_key_buffer_size }}
+sort_buffer_size                = {{ mariadb_conf_mysqld_buf_sort_buffer_size }}
+read_buffer_size                = {{ mariadb_conf_mysqld_buf_read_buffer_size }}
+read_rnd_buffer_size            = {{ mariadb_conf_mysqld_buf_read_rnd_buffer_size }}
+join_buffer_size                = {{ mariadb_conf_mysqld_buf_join_buffer_size }}
+
+# Caches config
+query_cache_limit               = {{ mariadb_conf_mysqld_cache_query_cache_limit }}
+query_cache_size                = {{ mariadb_conf_mysqld_cache_query_cache_size }}
+query_cache_type                = {{ mariadb_conf_mysqld_cache_query_cache_type }}
+table_cache                     = {{ mariadb_conf_mysqld_cache_table_cache }}
+table_definition_cache          = {{ mariadb_conf_mysqld_cache_table_definition_cache }}
+table_open_cache                = {{ mariadb_conf_mysqld_cache_table_open_cache }}
+table_open_cache_instances      = {{ mariadb_conf_mysqld_cache_table_open_cache_instances }}
+thread_cache_size               = {{ mariadb_conf_mysqld_cache_thread_cache_size }}
+
+# Charset config
+character-set-server            = {{ mariadb_conf_mysqld_charset_charset_set_server }}
+collation-server                = {{ mariadb_conf_mysqld_charset_collation_server }}
+
+# InnoDB config
+innodb_strict_mode              = {{ mariadb_conf_mysqld_innodb_strict_mode }}
+innodb_buffer_pool_size         = {{ mariadb_conf_mysqld_innodb_buffer_pool_size }}
+innodb_buffer_pool_instances    = {{ mariadb_conf_mysqld_innodb_buffer_pool_instances }}
+innodb_buffer_pool_load_at_startup = {{ mariadb_conf_mysqld_innodb_buffer_pool_load_at_startup }}
+innodb_file_per_table           = {{ mariadb_conf_mysqld_innodb_file_per_table }}
+innodb_flush_method             = {{ mariadb_conf_mysqld_innodb_flush_method }}
+innodb_flush_log_at_trx_commit  = {{ mariadb_conf_mysqld_innodb_flush_log_at_trx_commit }}
+innodb_log_buffer_size          = {{ mariadb_conf_mysqld_innodb_log_buffer_size }}
+innodb_log_file_size            = {{ mariadb_conf_mysqld_innodb_log_file_size }}
+innodb_log_files_in_group       = {{ mariadb_conf_mysqld_innodb_log_files_in_group }}
+
+# Logging config
+log_bin                         = /var/log/mysql/mysql-bin.log
+binlog_do_db                    = {{ mariadb_conf_mysqld_log_binlog_do_db }}
+binlog_ignore_db                = {{ mariadb_conf_mysqld_log_binlog_ignore_db }}
+max_binlog_size                 = {{ mariadb_conf_mysqld_log_max_binlog_size }}
+sync_binlog                     = {{ mariadb_conf_mysqld_log_sync_binlog }}
+expire_logs_days                = {{ mariadb_conf_mysqld_log_expire_logs_days }}
+general_log_file                = /var/log/mysql/mysql.log
+general_log                     = {{ mariadb_conf_mysqld_log_general_log }}
+log_error                       = /var/log/mysql/error.log
+long_query_time                 = {{ mariadb_conf_mysqld_log_long_query_time }}
+log_slow_rate_limit             = {{ mariadb_conf_mysqld_log_log_slow_rate_limit }}
+log_slow_verbosity              = {{ mariadb_conf_mysqld_log_log_slow_verbosity }}
+log-queries-not-using-indexes   = {{ mariadb_conf_mysqld_log_log_query_not_using_indexes }}
+slow_query_log_file             = /var/log/mysql/mariadb-slow.log
+
+# Threads config
+thread_stack                    = {{ mariadb_conf_mysqld_threads_stack }}
+
+# Enabling performance schema
+performance_schema              = {{ mariadb_conf_mysqld_performance_schema }}

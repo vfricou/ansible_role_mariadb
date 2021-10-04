@@ -1,0 +1,49 @@
+---
+- name: "mariadb | postconfigure | backup | deploy backup script"
+  ansible.builtin.copy:
+    src: srv-exploit-backup-scripts-mysql_backup.sh
+    dest: /srv/exploit/backup/scripts/mysql_backup.sh
+    owner: 'root'
+    group: 'root'
+    mode: '0700'
+
+- name: "mariadb | postconfigure | backup | stat if backup account already configured"
+  ansible.builtin.stat:
+    path: /srv/exploit/backup/scripts/.mysql_backup_pass
+  register: mysql_backup_pass_file
+
+- name: define backup user
+  block:
+    - name: "mariadb | postconfigure | backup | generate random password for backup user"
+      ansible.builtin.set_fact:
+        mariadb_backup_password: "{{ lookup('password', '/dev/null length=64 chars=ascii_letters,digits,-,_,.') }}"
+
+    - name: "mariadb | postconfigure | backup | store password in file"
+      ansible.builtin.copy:
+        content: "{{ mariadb_backup_password }}"
+        dest: /srv/exploit/backup/scripts/.mysql_backup_pass
+        owner: 'root'
+        group: 'root'
+        mode: '0400'
+
+    - name: "mariadb | postconfigure | backup | create backup user"
+      community.mysql.mysql_user:
+        name: 'backup'
+        host: '127.0.0.1'
+        password: "{{ mariadb_backup_password }}"
+        login_unix_socket: "{{ socket_path }}"
+        check_implicit_admin: yes
+        state: present
+        priv: '*.*:SELECT,LOCK TABLES,USAGE'
+
+  when:
+    - not mysql_backup_pass_file.stat.exists
+
+
+- name: "mariadb | postconfigure | backup | deploy backup cron task"
+  ansible.builtin.copy:
+    src: etc-cron.d-mysql_backup
+    dest: /etc/cron.d/mysql_backup
+    owner: 'root'
+    group: 'root'
+    mode: '0644'

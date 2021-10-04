@@ -1,0 +1,39 @@
+---
+rhel:
+  packages:
+    - mariadb-server
+    - mariadb
+    - mysqltuner
+    - python3-mysql
+    - cronie
+  path: "/etc/my.cnf.d"
+  mariadb:
+    socket: "/var/lib/mysql/mysql.sock"
+    pidfile: "/run/mariadb/mariadb.pid"
+
+debian:
+  dpkg_options: 'force-confold'
+  packages:
+    - mariadb-client
+    - mariadb-server
+    - python3-mysqldb
+    - python-pymysql
+    - mysqltuner
+    - cron
+  path: "/etc/mysql/mariadb.conf.d"
+  mariadb:
+    socket: "/run/mysqld/mysqld.sock"
+    pidfile: "/run/mysqld/mysqld.pid"
+
+mariadb:
+  path:
+    server: "50-server.cnf"
+    network: "50-network.cnf"
+    custom: "99-custom.cnf"
+    logrotate: "/etc/logrotate.d/mysql-server"
+  logrotate:
+    exist: 'missingok'
+    create:
+      mode: '640'
+      user: 'mysql'
+      group: 'adm'

@@ -1,0 +1,30 @@
+---
+- name: "mariadb | configure | deploy mariadb server configuration file"
+  ansible.builtin.template:
+    src: mariadb/server.cnf.j2
+    dest: "{{ config_server }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  vars:
+    socket_path: "{{ debian['mariadb']['socket'] }}"
+    pidfile_path: "{{ debian['mariadb']['pidfile'] }}"
+  notify: restart mariadb
+
+- name: "mariadb | configure | deploy mariadb network configuration file"
+  ansible.builtin.template:
+    src: mariadb/network.cnf.j2
+    dest: "{{ config_network }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: restart mariadb
+
+- name: "mariadb | configure | deploy mariadb custom configuration file"
+  ansible.builtin.template:
+    src: mariadb/custom.cnf.j2
+    dest: "{{ config_custom }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: restart mariadb

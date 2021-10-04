@@ -1,0 +1,7 @@
+---
+- name: "install | debian | install mariadb collection"
+  ansible.builtin.apt:
+    name: "{{ debian['packages'] }}"
+    state: present
+    dpkg_options: "{{ debian['dpkg_options'] }}"
+  notify: restart mariadb

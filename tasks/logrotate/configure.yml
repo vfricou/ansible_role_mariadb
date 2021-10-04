@@ -1,0 +1,8 @@
+---
+- name: "logrotate | configure | deploy logrotate configuration file"
+  ansible.builtin.template:
+    src: logrotate/mysql-server.j2
+    dest: "{{ mariadb['path']['logrotate'] }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0644'

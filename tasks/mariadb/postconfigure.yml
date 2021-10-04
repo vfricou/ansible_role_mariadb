@@ -1,0 +1,19 @@
+---
+
+- name: "INCLUDE => RHEL mariadb | postconfigure | backup tasks"
+  ansible.builtin.include_tasks: postconfigure/backup.yml
+  vars:
+    socket_path: "{{ rhel['mariadb']['socket'] }}"
+  when: ansible_distribution == 'Rocky' or
+        ansible_distribution == 'RedHat' or
+        ansible_distribution == 'CentOS'
+
+- name: "INCLUDE => DEBIAN mariadb | postconfigure | backup tasks"
+  ansible.builtin.include_tasks: postconfigure/backup.yml
+  vars:
+    socket_path: "{{ debian['mariadb']['socket'] }}"
+  when: ansible_distribution == 'Debian' or
+        ansible_distribution == 'Ubuntu'
+
+- name: "mariadb | postconfigure | import systemd postconfiguration"
+  ansible.builtin.import_tasks: postconfigure/systemd.yml
