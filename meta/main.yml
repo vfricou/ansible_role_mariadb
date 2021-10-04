@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  role_name: "mariadb"
+  namespace: "vfricou"
+  author: Vincent FRICOU
+  description: 'Deploy and/or configure mariadb on Linux hosts'
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 8
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+    - name: Ubuntu
+      versions:
+        - 18.04
+        - 20.04
+        - 21.04
+    - name: Rocky
+      versions:
+        - 8
+
+dependencies: []
