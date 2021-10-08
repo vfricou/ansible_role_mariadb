@@ -1,0 +1,14 @@
+---
+- name: test_logrotate | retrieve log folders {{ file }} informations
+  ansible.builtin.stat:
+    path: "{{ file }}"
+  register: logrotate_file
+
+- name: test_logrotate | check existances and permissions for {{ file }}
+  ansible.builtin.assert:
+    that:
+      - logrotate_file.stat.exists
+      - logrotate_file.stat.isreg
+      - logrotate_file.stat.mode == "0644"
+      - logrotate_file.stat.pw_name == "root"
+      - logrotate_file.stat.gr_name == "root"

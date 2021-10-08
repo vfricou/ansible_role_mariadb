@@ -1,0 +1,12 @@
+---
+- name: test_mariadb_timezone | get timezone count in database
+  community.mysql.mysql_query:
+    login_db: mysql
+    query: SELECT COUNT(1) FROM mysql.time_zone_name
+  register: test_mariadb_tz_count
+
+- name: test_mariadb_timezone | check timezone correctly imported in database
+  ansible.builtin.assert:
+    that: true
+  when:
+    - test_mariadb_tz_count['query_result'][0][0]['COUNT(1)']|int > 0
