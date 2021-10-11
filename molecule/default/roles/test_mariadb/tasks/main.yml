@@ -38,7 +38,7 @@
       loop:
         - "'mariadb' in ansible_facts.packages"
         - "'mariadb-server' in ansible_facts.packages"
-        - "'python3-mysqldb' in ansible_facts.packages"
+        - "'python3-mysql' in ansible_facts.packages"
         - "'mysqltuner' in ansible_facts.packages"
         - "'cronie' in ansible_facts.packages"
       loop_control:
