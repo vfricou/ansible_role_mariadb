@@ -14,10 +14,10 @@ platforms:
     dockerfile: Dockerfile-debian11.j2
     image: debian:11-slim
     command: "/sbin/init"
-#  - name: molecule_rocky8_instance
-#    dockerfile: Dockerfile-rocky8.j2
-#    image: rockylinux/rockylinux:8
-#    command: "/usr/sbin/init"
+  - name: molecule_rocky8_instance
+    dockerfile: Dockerfile-rocky8.j2
+    image: rockylinux/rockylinux:8
+    command: "/usr/sbin/init"
   - name: molecule_ubuntu2104_instance
     dockerfile: Dockerfile-ubuntu2104.j2
     image: ubuntu:21.04
