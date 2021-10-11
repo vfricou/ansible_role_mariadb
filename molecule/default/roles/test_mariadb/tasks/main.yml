@@ -1,0 +1,76 @@
+---
+- name: "Gathering facts"
+  ansible.builtin.gather_facts:
+    parallel: yes
+
+- name: "Gathering packages facts"
+  ansible.builtin.package_facts:
+    manager: "auto"
+
+- name: "Perform debian test tasks"
+  block:
+    - name: "INCLUDE => PACKAGES"
+      ansible.builtin.include_tasks: "lib/packages.yml"
+      loop:
+        - "'mariadb-client' in ansible_facts.packages"
+        - "'mariadb-server' in ansible_facts.packages"
+        - "'python3-mysqldb' in ansible_facts.packages"
+        - "'mysqltuner' in ansible_facts.packages"
+        - "'cron' in ansible_facts.packages"
+      loop_control:
+        loop_var: package_assertion
+
+    - name: "INCLUDE => FILES | Test mariadb configuration files"
+      ansible.builtin.include_tasks: "lib/files.yml"
+      loop:
+        - {path: '/etc/mysql/mariadb.conf.d/50-server.cnf', mode: '0644', owner: 'root', group: 'root'}
+        - {path: '/etc/mysql/mariadb.conf.d/50-network.cnf', mode: '0644', owner: 'root', group: 'root'}
+        - {path: '/etc/mysql/mariadb.conf.d/99-custom.cnf', mode: '0644', owner: 'root', group: 'root'}
+      loop_control:
+        loop_var: file
+  when: ansible_distribution == 'Debian' or
+        ansible_distribution == 'Ubuntu'
+
+- name: "Perform rhel test tasks"
+  block:
+    - name: "INCLUDE => PACKAGES"
+      ansible.builtin.include_tasks: "lib/packages.yml"
+      loop:
+        - "'mariadb' in ansible_facts.packages"
+        - "'mariadb-server' in ansible_facts.packages"
+        - "'python3-mysql' in ansible_facts.packages"
+        - "'mysqltuner' in ansible_facts.packages"
+        - "'cronie' in ansible_facts.packages"
+      loop_control:
+        loop_var: package_assertion
+
+    - name: "INCLUDE => FILES | Test mariadb configuration files"
+      ansible.builtin.include_tasks: "lib/files.yml"
+      loop:
+        - {path: '/etc/my.cnf.d/50-server.cnf', mode: '0644', owner: 'root', group: 'root'}
+        - {path: '/etc/my.cnf.d/50-network.cnf', mode: '0644', owner: 'root', group: 'root'}
+        - {path: '/etc/my.cnf.d/99-custom.cnf', mode: '0644', owner: 'root', group: 'root'}
+      loop_control:
+        loop_var: file
+  when: ansible_distribution == 'Rocky' or
+        ansible_distribution == 'RedHat'
+
+- name: "INCLUDE => FOLDERS | Test logs folders"
+  ansible.builtin.include_tasks: "lib/folders.yml"
+  loop:
+    - {path: '/var/log/mysql', mode: '0750', owner: 'mysql', group: 'mysql'}
+  loop_control:
+    loop_var: folder
+
+- name: "INCLUDE => FILES | Test logrotate configurations"
+  ansible.builtin.include_tasks: "lib/files.yml"
+  loop:
+    - {path: '/etc/logrotate.d/mysql-server', mode: '0644', owner: 'root', group: 'root'}
+  loop_control:
+    loop_var: file
+
+- name: "INCLUDE => MARIADB | Test timezone declarations"
+  ansible.builtin.include_tasks: "test_mariadb_timezone.yml"
+
+- name: "INCULDE => BACKUP | Test backup configurations"
+  ansible.builtin.import_tasks: backup/main.yml

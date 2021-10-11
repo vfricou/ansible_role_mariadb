@@ -1,0 +1,42 @@
+---
+- name: "backup | retrieve backup script informations"
+  ansible.builtin.stat:
+    path: "/srv/exploit/backup/scripts/mysql_backup.sh"
+  register: mariadb_bkp_script
+
+- name: "backup | check existances and permissions for backup script"
+  ansible.builtin.assert:
+    that:
+      - mariadb_bkp_script.stat.exists
+      - mariadb_bkp_script.stat.isreg
+      - mariadb_bkp_script.stat.mode == "0700"
+      - mariadb_bkp_script.stat.pw_name == "root"
+      - mariadb_bkp_script.stat.gr_name == "root"
+
+- name: "backup | retreive backup password file informations"
+  ansible.builtin.stat:
+    path: "/srv/exploit/backup/scripts/.mysql_backup_pass"
+  register: mariadb_bkp_passfile
+
+- name: "backup | check existances and permissions for backup script"
+  ansible.builtin.assert:
+    that:
+      - mariadb_bkp_script.stat.exists
+      - mariadb_bkp_script.stat.isreg
+      - mariadb_bkp_script.stat.mode == "0700"
+      - mariadb_bkp_script.stat.pw_name == "root"
+      - mariadb_bkp_script.stat.gr_name == "root"
+
+- name: "backup | retreive mysql_backup_pass_variable"
+  ansible.builtin.slurp:
+    src: '/srv/exploit/backup/scripts/.mysql_backup_pass'
+  register: mariadb_bkp_passfile
+
+- name: "backup | test backup account"
+  community.mysql.mysql_query:
+    login_db: mysql
+    query: SELECT COUNT(1) FROM mysql.time_zone_name
+    login_host: 127.0.0.1
+    login_user: 'backup'
+    login_password: "{{ mariadb_bkp_passfile['content'] | b64decode }}"
+  register: test_mariadb_bkp_account
