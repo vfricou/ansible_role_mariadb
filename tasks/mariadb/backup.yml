@@ -1,0 +1,35 @@
+---
+- name: "mariadb | backup | List databases"
+  community.mysql.mysql_info:
+    login_host: '127.0.0.1'
+    config_file: /root/.my.backup.cnf
+    filter:
+      - databases
+  register: mariadb_dblist
+
+- name: "mariadb | backup | perform database dump"
+  community.mysql.mysql_db:
+    login_host: '127.0.0.1'
+    config_file: /root/.my.backup.cnf
+    state: dump
+    name: '{{ item.key }}'
+    target: '/srv/exploit/backup/mysqldump/{{ item.key }}.{{ ansible_date_time.weekday }}.sql'
+    dump_extra_args: --single-transaction --compact --order-by-primary --add-drop-table
+  loop: "{{ lookup('dict', mariadb_dblist.databases) }}"
+
+- name: "mariadb | backup | list uncompressed dump files"
+  ansible.builtin.find:
+    paths: '/srv/exploit/backup/mysqldump/'
+    patterns: '*.sql'
+  register: mariadb_dumplist
+
+- name: "mariadb | backup | compress database dumps"
+  community.general.archive:
+    path: '{{ item.path }}'
+    format: gz
+    remove: yes
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+  with_items:
+    - '{{ mariadb_dumplist.files }}'

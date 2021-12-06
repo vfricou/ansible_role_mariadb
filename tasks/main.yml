@@ -3,6 +3,7 @@
 # @meta description: Deploy and/or configure mariadb server
 # @tag install # Install and configure mariadb server
 # @tag configure # Configure mariadb server and logrotate
+# @tag backup # Perform backup (dump) task
 
 - block:
     - name: "import validator tasks"
@@ -59,3 +60,8 @@
   tags:
     - install
     - configure
+
+- name: "import backup tasks"
+  ansible.builtin.import_tasks: mariadb/backup.yml
+  tags:
+    - backup
