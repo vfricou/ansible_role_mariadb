@@ -36,6 +36,17 @@
         state: present
         priv: '*.*:SELECT,LOCK TABLES,USAGE'
 
+    - name: "mariadb | psotconfigure | backup | setup connection configuration file"
+      ansible.builtin.template:
+        dest: /root/.my.backup.cnf
+        src: "mariadb/my.cnf.j2"
+        owner: 'root'
+        group: 'root'
+        mode: '0400'
+      vars:
+        user: 'backup'
+        password: '{{ mariadb_backup_password }}'
+
   when:
     - not mysql_backup_pass_file.stat.exists
 
