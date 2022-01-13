@@ -50,7 +50,6 @@
   when:
     - not mysql_backup_pass_file.stat.exists
 
-
 - name: "mariadb | postconfigure | backup | deploy backup cron task"
   ansible.builtin.copy:
     src: etc-cron.d-mysql_backup
@@ -58,3 +57,10 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
+  when: mariadb_backup_cron_task == 'yes'
+
+- name: "mariadb | postconfigure | backup | ensure backup cron task is not defined"
+  ansible.builtin.file:
+    path: /etc/cron.d/mysql_backup
+    state: absent
+  when: mariadb_backup_cron_task == 'no'
