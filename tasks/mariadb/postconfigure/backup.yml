@@ -34,11 +34,21 @@
         login_unix_socket: "{{ socket_path }}"
         check_implicit_admin: yes
         state: present
-        priv: '*.*:SELECT,LOCK TABLES,USAGE'
+        priv: '*.*:SELECT,LOCK TABLES,SHOW VIEW,PROCESS,USAGE'
+
+    - name: "mariadb | psotconfigure | backup | setup connection configuration file"
+      ansible.builtin.template:
+        dest: /root/.my.backup.cnf
+        src: "mariadb/my.cnf.j2"
+        owner: 'root'
+        group: 'root'
+        mode: '0400'
+      vars:
+        user: 'backup'
+        password: '{{ mariadb_backup_password }}'
 
   when:
     - not mysql_backup_pass_file.stat.exists
-
 
 - name: "mariadb | postconfigure | backup | deploy backup cron task"
   ansible.builtin.copy:
@@ -47,3 +57,10 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
+  when: mariadb_backup_cron_task == 'yes'
+
+- name: "mariadb | postconfigure | backup | ensure backup cron task is not defined"
+  ansible.builtin.file:
+    path: /etc/cron.d/mysql_backup
+    state: absent
+  when: mariadb_backup_cron_task == 'no'
