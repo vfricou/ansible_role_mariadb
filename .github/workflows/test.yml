@@ -1,0 +1,21 @@
+---
+name: Test
+
+on:
+  - push
+
+jobs:
+  test:
+    needs:
+      - lint
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule
+        uses: robertdebock/molecule-action@2.7.2
+        with:
+          options: parallel
+          scenario: default

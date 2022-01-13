@@ -3,7 +3,7 @@ dependency:
   name: galaxy
 # Define podman as driver to perform tests with systemd container instances
 driver:
-  name: podman
+  name: docker
 # Define multiples platforms to validate all playbook
 platforms:
   - name: molecule_debian10_instance
