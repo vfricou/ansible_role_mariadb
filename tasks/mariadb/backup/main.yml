@@ -7,14 +7,10 @@
       - databases
   register: mariadb_dblist
 
-- name: "mariadb | backup | perform database dump"
-  community.mysql.mysql_db:
-    login_host: '127.0.0.1'
-    config_file: /root/.my.backup.cnf
-    state: dump
-    name: '{{ item.key }}'
-    target: '/srv/exploit/backup/mysqldump/{{ item.key }}.{{ ansible_date_time.weekday }}.sql'
-    dump_extra_args: --single-transaction --compact --order-by-primary --add-drop-table
+- name: "mariadb | backup | perform databases dump"
+  ansible.builtin.include_tasks: ./dump.yml
+  vars:
+    db: "{{ item }}"
   loop: "{{ lookup('dict', mariadb_dblist.databases) }}"
 
 - name: "mariadb | backup | list uncompressed dump files"
