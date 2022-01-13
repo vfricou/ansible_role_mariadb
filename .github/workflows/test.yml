@@ -6,8 +6,6 @@ on:
 
 jobs:
   test:
-    needs:
-      - lint
     runs-on: ubuntu-20.04
     steps:
       - name: checkout
