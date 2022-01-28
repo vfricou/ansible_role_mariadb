@@ -15,7 +15,7 @@
 
 - name: "mariadb | backup | list uncompressed dump files"
   ansible.builtin.find:
-    paths: '/srv/exploit/backup/mysqldump/'
+    paths: '{{ mariadb_backup_path }}'
     patterns: '*.sql'
   register: mariadb_dumplist
 

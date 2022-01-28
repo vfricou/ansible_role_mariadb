@@ -5,6 +5,8 @@ mariadb_conf_logrotate_retention: '30'
 mariadb_conf_network_bind: '127.0.0.1'
 # @var mariadb_backup_cron_task: 'yes' # Define if playbook create backup cron task
 mariadb_backup_cron_task: 'yes'
+# @var mariadb_backup_path: '/srv/exploit/backup/mysqldump' # Define mariadb dump path
+mariadb_backup_path: '/srv/exploit/backup/mysqldump'
 
 # @var mariadb_conf_mysqld_gen_max_allowed_packets: '16M' # Define max network packet size
 mariadb_conf_mysqld_gen_max_allowed_packets: '16M'

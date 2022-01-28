@@ -5,7 +5,7 @@
     config_file: /root/.my.backup.cnf
     state: dump
     name: '{{ db.key }}'
-    target: '/srv/exploit/backup/mysqldump/{{ db.key }}.{{ ansible_date_time.weekday }}.sql'
+    target: '{{ mariadb_backup_path }}/{{ db.key }}.{{ ansible_date_time.weekday }}.sql'
     dump_extra_args: --single-transaction --compact --order-by-primary --add-drop-table
   when:
     - '"information_schema" not in db.key'

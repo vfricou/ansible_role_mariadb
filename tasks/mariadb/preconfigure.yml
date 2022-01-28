@@ -30,7 +30,7 @@
     state: directory
   with_items:
     - /srv/exploit/backup/scripts
-    - /srv/exploit/backup/mysqldump
+    - '{{ mariadb_backup_path }}'
     - /etc/systemd/system/mariadb.service.d
 
 - name: "mariadb | preconfigure | ensure log folder rigths"
