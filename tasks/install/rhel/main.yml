@@ -4,3 +4,17 @@
     name: "{{ rhel['packages'] }}"
     state: present
   notify: restart mariadb
+
+- name: "install | rhel | install rhel8 mariadb collection"
+  ansible.builtin.yum:
+    name: "{{ rhel8['packages'] }}"
+    state: present
+  notify: restart mariadb
+  when: ansible_distribution_major_version|int == 8
+
+- name: "install | rhel | install rhel9 mariadb collection"
+  ansible.builtin.yum:
+    name: "{{ rhel9['packages'] }}"
+    state: present
+  notify: restart mariadb
+  when: ansible_distribution_major_version|int == 9

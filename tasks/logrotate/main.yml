@@ -4,7 +4,8 @@
   vars:
     config_default_path: '/etc/my.cnf'
   when: ansible_distribution == 'Rocky' or
-        ansible_distribution == 'RedHat'
+        ansible_distribution == 'RedHat' or
+        ansible_distribution == 'AlmaLinux'
 
 - name: "INCLUDE => DEBIAN logrotate | configure"
   ansible.builtin.include_tasks: configure.yml

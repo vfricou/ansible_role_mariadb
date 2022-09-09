@@ -8,6 +8,9 @@ supported_platforms:
   - name: Rocky
     versions:
       - 8
+  - name: AlmaLinux
+    versions:
+      - 8
   - name: Ubuntu
     versions:
       - 18.04
@@ -23,12 +26,19 @@ rhel:
     - mariadb-server
     - mariadb
     - mysqltuner
-    - python3-mysql
     - cronie
   path: "/etc/my.cnf.d"
   mariadb:
     socket: "/var/lib/mysql/mysql.sock"
     pidfile: "/run/mariadb/mariadb.pid"
+
+rhel8:
+  packages:
+    - python3-mysql
+
+#rhel9:
+#  packages:
+#    - python3-mysqlclient
 
 debian:
   dpkg_options: 'force-confold'

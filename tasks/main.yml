@@ -22,7 +22,8 @@
       vars:
         config_folder: "{{ rhel['path'] }}"
       when: ansible_distribution == 'Rocky' or
-            ansible_distribution == 'RedHat'
+            ansible_distribution == 'RedHat' or
+            ansible_distribution == 'AlmaLinux'
 
     - name: "INCLUDE => DEBIAN mariadb | preconfigure tasks"
       ansible.builtin.include_tasks: mariadb/preconfigure.yml
@@ -41,7 +42,8 @@
         config_network: "{{ rhel['path'] }}/{{ mariadb['path']['network'] }}"
         config_custom: "{{ rhel['path'] }}/{{ mariadb['path']['custom'] }}"
       when: ansible_distribution == 'Rocky' or
-            ansible_distribution == 'RedHat'
+            ansible_distribution == 'RedHat' or
+            ansible_distribution == 'AlmaLinux'
 
     - name: "INCLUDE => DEBIAN mariadb | configure tasks"
       ansible.builtin.include_tasks: mariadb/configure.yml
