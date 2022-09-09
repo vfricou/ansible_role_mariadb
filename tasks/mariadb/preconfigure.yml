@@ -17,7 +17,17 @@
       community.mysql.mysql_db:
         name: mysql
         state: import
+        login_unix_socket: "{{ rhel['mariadb']['socket'] }}"
         target: /tmp/zoneinfo.sql
+      when: ansible_os_family == 'RedHat'
+
+    - name: "mariadb | preconfigure | import zoneinfo into mariadb"
+      community.mysql.mysql_db:
+        name: mysql
+        state: import
+        login_unix_socket: "{{ debian['mariadb']['socket'] }}"
+        target: /tmp/zoneinfo.sql
+      when: ansible_os_family == 'Debian'
   when:
     - mariadb_tz_name['query_result'][0][0]['COUNT(1)']|int == 0
 
