@@ -13,7 +13,7 @@
     - name: "mariadb | preconfigure | generate timezone sql file"  # noqa no-changed-when
       ansible.builtin.shell: mysql_tzinfo_to_sql /usr/share/zoneinfo/ > /tmp/zoneinfo.sql
 
-    - name: "mariadb | preconfigure | import zoneinfo into mariadb"
+    - name: "mariadb | preconfigure | import rhel zoneinfo into mariadb"
       community.mysql.mysql_db:
         name: mysql
         state: import
@@ -21,7 +21,7 @@
         target: /tmp/zoneinfo.sql
       when: ansible_os_family == 'RedHat'
 
-    - name: "mariadb | preconfigure | import zoneinfo into mariadb"
+    - name: "mariadb | preconfigure | import  debianzoneinfo into mariadb"
       community.mysql.mysql_db:
         name: mysql
         state: import
@@ -53,10 +53,20 @@
   with_items:
     - /var/log/mysql
 
-- name: "mariadb | preconfigure | ensure main configuration folder present"
+- name: "mariadb | preconfigure | ensure rhel main configuration folder present"
   ansible.builtin.file:
-    path: '{{ config_folder }}'
+    path: "{{ rhel['path'] }}"
     owner: 'root'
     group: 'root'
     mode: '0755'
     state: directory
+  when: ansible_os_family == 'RedHat'
+
+- name: "mariadb | preconfigure | ensure debian main configuration folder present"
+  ansible.builtin.file:
+    path: "{{ debian['path'] }}"
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    state: directory
+  when: ansible_os_family == 'Debian'
