@@ -3,12 +3,10 @@
   ansible.builtin.include_tasks: configure.yml
   vars:
     config_default_path: '/etc/my.cnf'
-  when: ansible_distribution == 'Rocky' or
-        ansible_distribution == 'RedHat'
+  when: ansible_os_family == 'RedHat'
 
 - name: "INCLUDE => DEBIAN logrotate | configure"
   ansible.builtin.include_tasks: configure.yml
   vars:
     config_default_path: '/etc/mysql/debian.cnf'
-  when: ansible_distribution == 'Debian' or
-        ansible_distribution == 'Ubuntu'
+  when: ansible_os_family == 'Debian'

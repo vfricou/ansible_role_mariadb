@@ -36,7 +36,7 @@
         state: present
         priv: '*.*:SELECT,LOCK TABLES,SHOW VIEW,PROCESS,USAGE'
 
-    - name: "mariadb | psotconfigure | backup | setup connection configuration file"
+    - name: "mariadb | postconfigure | backup | setup connection configuration file"
       ansible.builtin.template:
         dest: /root/.my.backup.cnf
         src: "mariadb/my.cnf.j2"
