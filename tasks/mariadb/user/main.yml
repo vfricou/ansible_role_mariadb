@@ -1,0 +1,19 @@
+---
+- name: 'INCLUDE => USER CREATION | rhel'
+  ansible.builtin.include_tasks: user_creation.yml
+  vars:
+    user: "{{ item }}"
+    socket_path: "{{ rhel['mariadb']['socket'] }}"
+  loop: "{{ mariadb_users_list | dict2items }}"
+  when: ansible_os_family == 'RedHat'
+
+- name: 'INCLUDE => USER CREATION | debian'
+  ansible.builtin.include_tasks: user_creation.yml
+  vars:
+    user: "{{ item }}"
+    socket_path: "{{ debian['mariadb']['socket'] }}"
+  loop: "{{ mariadb_users_list | dict2items }}"
+  when: ansible_os_family == 'Debian'
+
+
+
