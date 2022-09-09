@@ -21,16 +21,13 @@
       ansible.builtin.include_tasks: mariadb/preconfigure.yml
       vars:
         config_folder: "{{ rhel['path'] }}"
-      when: ansible_distribution == 'Rocky' or
-            ansible_distribution == 'RedHat' or
-            ansible_distribution == 'AlmaLinux'
+      when: ansible_os_family == 'RedHat'
 
     - name: "INCLUDE => DEBIAN mariadb | preconfigure tasks"
       ansible.builtin.include_tasks: mariadb/preconfigure.yml
       vars:
         config_folder: "{{ debian['path'] }}"
-      when: ansible_distribution == 'Debian' or
-            ansible_distribution == 'Ubuntu'
+      when: ansible_os_family == 'Debian'
   tags:
     - install
 
@@ -41,9 +38,7 @@
         config_server: "{{ rhel['path'] }}/{{ mariadb['path']['server'] }}"
         config_network: "{{ rhel['path'] }}/{{ mariadb['path']['network'] }}"
         config_custom: "{{ rhel['path'] }}/{{ mariadb['path']['custom'] }}"
-      when: ansible_distribution == 'Rocky' or
-            ansible_distribution == 'RedHat' or
-            ansible_distribution == 'AlmaLinux'
+      when: ansible_os_family == 'RedHat'
 
     - name: "INCLUDE => DEBIAN mariadb | configure tasks"
       ansible.builtin.include_tasks: mariadb/configure.yml
@@ -51,8 +46,7 @@
         config_server: "{{ debian['path'] }}/{{ mariadb['path']['server'] }}"
         config_network: "{{ debian['path'] }}/{{ mariadb['path']['network'] }}"
         config_custom: "{{ debian['path'] }}/{{ mariadb['path']['custom'] }}"
-      when: ansible_distribution == 'Debian' or
-            ansible_distribution == 'Ubuntu'
+      when: ansible_os_family == 'Debian'
 
     - name: "import logrotate configuration tasks"
       ansible.builtin.import_tasks: logrotate/main.yml

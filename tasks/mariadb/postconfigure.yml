@@ -4,16 +4,13 @@
   ansible.builtin.include_tasks: postconfigure/backup.yml
   vars:
     socket_path: "{{ rhel['mariadb']['socket'] }}"
-  when: ansible_distribution == 'Rocky' or
-        ansible_distribution == 'RedHat' or
-        ansible_distribution == 'AlmaLinux'
+  when: ansible_os_family == 'RedHat'
 
 - name: "INCLUDE => DEBIAN mariadb | postconfigure | backup tasks"
   ansible.builtin.include_tasks: postconfigure/backup.yml
   vars:
     socket_path: "{{ debian['mariadb']['socket'] }}"
-  when: ansible_distribution == 'Debian' or
-        ansible_distribution == 'Ubuntu'
+  when: ansible_os_family == 'Debian'
 
 - name: "mariadb | postconfigure | import systemd postconfiguration"
   ansible.builtin.import_tasks: postconfigure/systemd.yml
