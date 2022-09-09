@@ -39,3 +39,8 @@
   ansible.builtin.import_tasks: mariadb/backup/main.yml
   tags:
     - backup
+
+- name: "INCLUDE => USER mariadb | user tasks"
+  ansible.builtin.import_tasks: mariadb/user/main.yml
+  tags:
+    - user
